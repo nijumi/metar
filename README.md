@@ -1,6 +1,6 @@
 metar
 =====
-This is a tool to fetch meterological information from the National Oceanic and Atmospheric Administration's (NOAA) [Aviation Weather Center](http://aviationweather.gov/adds/metars/ "ADDS - METARs").
+This is a tool to fetch meteorological information from the National Oceanic and Atmospheric Administration's (NOAA) [Aviation Weather Center](http://aviationweather.gov/adds/metars/ "ADDS - METARs").
 
 Prerequisites:
 
