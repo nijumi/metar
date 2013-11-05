@@ -36,6 +36,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
+#include <strings.h>
 #include <memory.h>
 #include <stdarg.h>
 #include <time.h>
@@ -161,6 +162,7 @@ void strReplaceInt(const char *restrict needle, int replacement, const char *res
 void strReplaceFloat(const char *restrict needle, float replacement, const char *restrict haystack, char *dest, size_t len);
 void strReplaceFloat2(const char *restrict needle, float replacement, const char *restrict haystack, char *dest, size_t len);
 const char *flightConditions(enum flight_rules rules, int color);
+time_t metar_timegm(struct tm *t);
 
 int main(int argc, const char *argv[])
 {
@@ -1224,7 +1226,7 @@ int xmlToMetar(xmlDoc *restrict xml, struct metar *restrict w, size_t count)
 
               //struct tm when;
               if ( strptime(xstr, "%Y-%m-%dT%H:%M:%SZ", &when) != NULL )
-                weather->observation_time = timegm(&when); //mktime(&when);
+                weather->observation_time = metar_timegm(&when); //mktime(&when);
 
               //if ( getdate_r(cur->content, &when) == 0 )   // damn, doesn't work on OS X!
               //  weather->observation_time = mktime(&when);
@@ -1557,5 +1559,22 @@ int isVfrWeather(enum sky_cover_type ceil)
     || (ceil == METAR_SKYCOND_SKC) || (ceil == METAR_SKYCOND_CLR) )
     return 1;
   return 0;
+}
+
+time_t metar_timegm(struct tm *t)
+{
+  time_t val;
+  char *tz;
+
+  tz = getenv("TZ");
+  setenv("TZ", "", 1);
+  tzset();
+  val = mktime(t);
+  if ( tz )
+    setenv("TZ", tz, 1);
+  else
+    unsetenv("TZ");
+  tzset();
+  return val;
 }
 

@@ -1,6 +1,6 @@
 
 CC = gcc
-CCFLAGS = -std=c99 -Wno-pointer-sign -D_XOPEN_SOURCE -D_XOPEN_SOURCE_EXTENDED $(shell curl-config --cflags) $(shell xml2-config --cflags)
+CCFLAGS = -std=c99 -Wno-pointer-sign -D_BSD_SOURCE -D_XOPEN_SOURCE -D_XOPEN_SOURCE_EXTENDED $(shell curl-config --cflags) $(shell xml2-config --cflags)
 DBGFLAGS = -g -DDEBUG=1
 
 HEADERS = 
