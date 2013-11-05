@@ -1,6 +1,6 @@
 
 CC = gcc
-CCFLAGS = -Wno-pointer-sign $(shell curl-config --cflags) $(shell xml2-config --cflags)
+CCFLAGS = -std=c99 -Wno-pointer-sign -D_XOPEN_SOURCE -D_XOPEN_SOURCE_EXTENDED $(shell curl-config --cflags) $(shell xml2-config --cflags)
 DBGFLAGS = -g -DDEBUG=1
 
 HEADERS = 
@@ -18,7 +18,7 @@ else
 endif
 
 ifeq ($(UNAME_S),Linux)
-	PLIBS = $(LIBS) #-ldl
+	PLIBS = $(LIBS) -lm #-ldl
 else
 	PLIBS = $(LIBS)
 endif
