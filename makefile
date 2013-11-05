@@ -37,7 +37,7 @@ $(EXE): $(OBJS)
 clean:
 	rm -f $(EXE) $(OBJS)
 
-install:
+install: $(EXE)
 	cp $(EXE) /usr/local/bin/$(EXE)
 
 .PHONY: clean install
